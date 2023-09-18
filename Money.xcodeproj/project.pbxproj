@@ -20,6 +20,8 @@
 		1AB3DFB92A8BD1E80024B927 /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB3DFB82A8BD1E80024B927 /* AccountViewModel.swift */; };
 		1AE43B0B2A8E734000F15978 /* MoneyServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE43B0A2A8E734000F15978 /* MoneyServiceTests.swift */; };
 		54CA89F32AB8CA35003CA763 /* MoneyTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA89F22AB8CA35003CA763 /* MoneyTransaction.swift */; };
+		54CA89F52AB8E43F003CA763 /* Advice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA89F42AB8E43F003CA763 /* Advice.swift */; };
+		54CA89F72AB8EC2A003CA763 /* AdviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA89F62AB8EC2A003CA763 /* AdviceView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,8 @@
 		1AB3DFB82A8BD1E80024B927 /* AccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
 		1AE43B0A2A8E734000F15978 /* MoneyServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyServiceTests.swift; sourceTree = "<group>"; };
 		54CA89F22AB8CA35003CA763 /* MoneyTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyTransaction.swift; sourceTree = "<group>"; };
+		54CA89F42AB8E43F003CA763 /* Advice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advice.swift; sourceTree = "<group>"; };
+		54CA89F62AB8EC2A003CA763 /* AdviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdviceView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +171,7 @@
 			children = (
 				1AB3DFAD2A8BCBBF0024B927 /* Account.swift */,
 				54CA89F22AB8CA35003CA763 /* MoneyTransaction.swift */,
+				54CA89F42AB8E43F003CA763 /* Advice.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -175,6 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				1AB3DF7A2A8BC0B00024B927 /* AccountView.swift */,
+				54CA89F62AB8EC2A003CA763 /* AdviceView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -319,11 +325,13 @@
 			files = (
 				1AB3DFAB2A8BC99E0024B927 /* MoneyService.swift in Sources */,
 				1AB3DF7B2A8BC0B00024B927 /* AccountView.swift in Sources */,
+				54CA89F52AB8E43F003CA763 /* Advice.swift in Sources */,
 				54CA89F32AB8CA35003CA763 /* MoneyTransaction.swift in Sources */,
 				1AB3DF792A8BC0B00024B927 /* MoneyApp.swift in Sources */,
 				1AB3DFA32A8BC3970024B927 /* LaunchScreenStateManager.swift in Sources */,
 				1AB3DFA62A8BC45D0024B927 /* LaunchScreenView.swift in Sources */,
 				1AB3DFB92A8BD1E80024B927 /* AccountViewModel.swift in Sources */,
+				54CA89F72AB8EC2A003CA763 /* AdviceView.swift in Sources */,
 				1AB3DFAE2A8BCBBF0024B927 /* Account.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
