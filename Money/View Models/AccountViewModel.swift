@@ -11,6 +11,7 @@ import Combine
 @MainActor class AccountViewModel: ObservableObject {
     @Published private(set) var isBusy = false
     @Published private(set) var accountBalance: String = "-"
+    @Published private(set) var transactions: [TransactionDetail] = []
 
     private let moneyService = MoneyService()
     private var cancellables = Set<AnyCancellable>()
@@ -27,5 +28,8 @@ import Combine
     func fetchAccountData() async {
         guard let account = await moneyService.getAccount() else { return }
         accountBalance = account.balance.formatted(.currency(code: account.currency))
+        
+        guard let transactions = await moneyService.getTransactions() else { return }
+        self.transactions = transactions.data
     }
 }

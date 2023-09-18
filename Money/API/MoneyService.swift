@@ -24,6 +24,10 @@ class MoneyService: MoneyServiceProtocol {
     func getAccount() async -> Account? {
         await getData("balance")
     }
+    
+    func getTransactions() async -> MoneyTransaction? {
+        await getData("transactions")
+    }
 
     private func getData<T: Codable>(_ endpoint: String) async -> T? {
         _isBusy.send(true)
@@ -38,7 +42,6 @@ class MoneyService: MoneyServiceProtocol {
         } catch {
             print("Error getting data from \(endpoint): \(error)")
         }
-
         return nil
     }
 }
