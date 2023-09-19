@@ -24,13 +24,17 @@ struct AdviceView: View {
                 Color.green.opacity(0.2)
             }
             HStack {
-                if type == .info {
-                    Image(systemName: "info.circle.fill")
-                        .foregroundColor(.blue)
-                } else {
-                    Image(systemName: "checkmark.circle.fill")
-                        .foregroundColor(.green)
+                Group {
+                    if type == .info {
+                        Image(systemName: "info.circle.fill")
+                            .foregroundColor(.blue)
+                    } else {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(.green)
+                    }
                 }
+                .padding(.horizontal)
+                
                 
                 
                 VStack(alignment: .leading) {
@@ -42,8 +46,11 @@ struct AdviceView: View {
                         .foregroundStyle(.secondary)
                 }
             }
+            .padding(.vertical)
         }
+        .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
         .clipShape(RoundedRectangle(cornerSize: CGSize(width: 20, height: 10)))
+        .padding(.horizontal)
         
     }
 }

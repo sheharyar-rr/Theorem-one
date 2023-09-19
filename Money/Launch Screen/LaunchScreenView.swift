@@ -20,7 +20,8 @@ struct LaunchScreenView: View {
                 HStack {
                     Text("Formula\nMoney")
                         .foregroundColor(.white)
-                        .font(.system(size: 48))
+                        .font(.largeTitle)
+                        .bold()
                     Spacer()
                 }
                 .padding(.leading, 36)

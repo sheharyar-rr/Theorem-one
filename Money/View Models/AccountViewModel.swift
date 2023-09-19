@@ -12,6 +12,8 @@ import Combine
     @Published private(set) var isBusy = false
     @Published private(set) var accountBalance: String = "-"
     @Published private(set) var transactions: [TransactionDetail] = []
+    @Published private(set) var advice: Advice = Advice(title: "", description: "")
+    
 
     private let moneyService = MoneyService()
     private var cancellables = Set<AnyCancellable>()
@@ -31,5 +33,16 @@ import Combine
         
         guard let transactions = await moneyService.getTransactions() else { return }
         self.transactions = transactions.data
+        
+        let last = transactions.data.map {
+            $0.id
+        }
+        await fetchAdvice(ids: last)
+    }
+    
+    func fetchAdvice(ids: [String]) async {
+        guard let advice = await moneyService.getAdvice(transactionIds: ids) else { return }
+        self.advice = advice
+        print("advice", advice)
     }
 }

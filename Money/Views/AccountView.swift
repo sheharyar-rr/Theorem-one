@@ -12,26 +12,47 @@ struct AccountView: View {
     @StateObject private var viewModel = AccountViewModel()
 
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("Account Balance")
-                .font(.subheadline)
-                .bold()
-
+        VStack {
             HStack {
-                if viewModel.isBusy {
-                    ProgressView()
-                } else {
-                    Text(viewModel.accountBalance)
-                        .font(.largeTitle)
+                VStack(alignment: .leading) {
+                    Text("Account Balance")
+                        .font(.subheadline)
                         .bold()
-                }
-            }
-            .animation(.default, value: viewModel.isBusy)
 
+                    HStack {
+                        if viewModel.isBusy {
+                            ProgressView()
+                        } else {
+                            Text(viewModel.accountBalance)
+                                .font(.largeTitle)
+                                .bold()
+                        }
+                    }
+                    .animation(.default, value: viewModel.isBusy)
+                }
+                Spacer()
+            }
+            .padding([.leading, .trailing])
+            
+            VStack {
+                List(viewModel.transactions) { transaction in
+                    HStack {
+                        Text(transaction.title)
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                        Spacer()
+                        Text(transaction.formattedAmount())
+                    }
+                }
+                .listStyle(.plain)
+            }
+            
+            AdviceView(type: .advice, advice: viewModel.advice)
             Spacer()
         }
+        
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding([.leading, .trailing], 28)
+        
         .padding(.top)
         .task {
             // Workaround to overcome the limitations of SwiftUI's launch screen feature.

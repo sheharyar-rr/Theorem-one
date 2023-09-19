@@ -12,6 +12,8 @@ protocol MoneyServiceProtocol {
     var isBusy: AnyPublisher<Bool, Never> { get }
 
     func getAccount() async -> Account?
+    func getTransactions() async -> MoneyTransaction?
+    func getAdvice(transactionIds: [String]) async -> Advice?
 }
 
 class MoneyService: MoneyServiceProtocol {
@@ -29,8 +31,8 @@ class MoneyService: MoneyServiceProtocol {
         await getData("transactions")
     }
     
-    func getAdvice(tIds: [String]) async -> Advice? {
-        await getDataa(tIDS: tIds, "transactions")
+    func getAdvice(transactionIds: [String]) async -> Advice? {
+        await postData(httpBody: ["transactionIds": transactionIds], "advice")
     }
 
     private func getData<T: Codable>(_ endpoint: String) async -> T? {
@@ -49,21 +51,19 @@ class MoneyService: MoneyServiceProtocol {
         return nil
     }
     
-    private func getDataa<T: Codable>(tIDS: [String], _ endpoint: String) async -> T? {
+    private func postData<T: Codable>(httpBody: [String: [String]], _ endpoint: String) async -> T? {
         _isBusy.send(true)
         defer { _isBusy.send(false) }
 
-        let dataURL = Self.serviceBaseURL.appending(component: endpoint).appending(component: "advice")
+        let dataURL = Self.serviceBaseURL.appending(component: "transactions").appending(component: endpoint)
         var request = URLRequest(url: dataURL)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
+
         do {
-            let jsonData = try? JSONSerialization.data(withJSONObject: ["transactionIds": tIDS])
+            let jsonData = try? JSONSerialization.data(withJSONObject: httpBody)
             request.httpBody = jsonData
-            let (data, response) = try await session.data(for: request)
-            let obj = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-            print(obj, response)
+            let (data, _) = try await session.data(for: request)
             let object = try JSONDecoder().decode(T.self, from: data)
             return object
         } catch {
