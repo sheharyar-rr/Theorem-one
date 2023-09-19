@@ -22,6 +22,8 @@
 		54CA89F32AB8CA35003CA763 /* MoneyTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA89F22AB8CA35003CA763 /* MoneyTransaction.swift */; };
 		54CA89F52AB8E43F003CA763 /* Advice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA89F42AB8E43F003CA763 /* Advice.swift */; };
 		54CA89F72AB8EC2A003CA763 /* AdviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA89F62AB8EC2A003CA763 /* AdviceView.swift */; };
+		54CA89F92AB94718003CA763 /* MoneyPersistanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA89F82AB94718003CA763 /* MoneyPersistanceService.swift */; };
+		54CA8A012ABA29B4003CA763 /* MoneyApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA8A002ABA29B4003CA763 /* MoneyApiService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,8 @@
 		54CA89F22AB8CA35003CA763 /* MoneyTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyTransaction.swift; sourceTree = "<group>"; };
 		54CA89F42AB8E43F003CA763 /* Advice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advice.swift; sourceTree = "<group>"; };
 		54CA89F62AB8EC2A003CA763 /* AdviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdviceView.swift; sourceTree = "<group>"; };
+		54CA89F82AB94718003CA763 /* MoneyPersistanceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyPersistanceService.swift; sourceTree = "<group>"; };
+		54CA8A002ABA29B4003CA763 /* MoneyApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyApiService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +166,8 @@
 			isa = PBXGroup;
 			children = (
 				1AB3DFAA2A8BC99E0024B927 /* MoneyService.swift */,
+				54CA89F82AB94718003CA763 /* MoneyPersistanceService.swift */,
+				54CA8A002ABA29B4003CA763 /* MoneyApiService.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -326,6 +332,8 @@
 				1AB3DFAB2A8BC99E0024B927 /* MoneyService.swift in Sources */,
 				1AB3DF7B2A8BC0B00024B927 /* AccountView.swift in Sources */,
 				54CA89F52AB8E43F003CA763 /* Advice.swift in Sources */,
+				54CA8A012ABA29B4003CA763 /* MoneyApiService.swift in Sources */,
+				54CA89F92AB94718003CA763 /* MoneyPersistanceService.swift in Sources */,
 				54CA89F32AB8CA35003CA763 /* MoneyTransaction.swift in Sources */,
 				1AB3DF792A8BC0B00024B927 /* MoneyApp.swift in Sources */,
 				1AB3DFA32A8BC3970024B927 /* LaunchScreenStateManager.swift in Sources */,

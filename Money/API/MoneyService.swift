@@ -17,58 +17,43 @@ protocol MoneyServiceProtocol {
 }
 
 class MoneyService: MoneyServiceProtocol {
-    private let _isBusy = PassthroughSubject<Bool, Never>()
-    lazy private(set) var isBusy = _isBusy.eraseToAnyPublisher()
-
-    private static let serviceBaseURL = URL(string: "https://8kq890lk50.execute-api.us-east-1.amazonaws.com/prd/accounts/0172bd23-c0da-47d0-a4e0-53a3ad40828f")!
-    private let session = URLSession.shared
-
+    
+    var isBusy: AnyPublisher<Bool, Never>
+    
+    private var api: MoneyServiceProtocol
+    private var persistance: MoneyServiceProtocol & MoneyPersistanceProtocol
+    
+    private var cancellables = Set<AnyCancellable>()
+    
+    init(Api: MoneyServiceProtocol = MoneyApiService(), persistance: (MoneyServiceProtocol & MoneyPersistanceProtocol) = MoneyPersistanceService()) {
+        self.api = Api
+        self.persistance = persistance
+        
+        self.isBusy = api.isBusy
+    }
+    
     func getAccount() async -> Account? {
-        await getData("balance")
+        if let account = await api.getAccount() {
+            // Save to persistence layer
+            persistance.saveAccount(account: account)
+            return account
+        } else {
+            return await persistance.getAccount()
+        }
     }
     
     func getTransactions() async -> MoneyTransaction? {
-        await getData("transactions")
+        if let transactions = await api.getTransactions() {
+            // Save to persistence layer
+            persistance.saveTransactions(transactions: transactions)
+            return transactions
+        } else {
+            return await persistance.getTransactions()
+        }
     }
     
     func getAdvice(transactionIds: [String]) async -> Advice? {
-        await postData(httpBody: ["transactionIds": transactionIds], "advice")
-    }
-
-    private func getData<T: Codable>(_ endpoint: String) async -> T? {
-        _isBusy.send(true)
-        defer { _isBusy.send(false) }
-
-        let dataURL = Self.serviceBaseURL.appending(component: endpoint)
-
-        do {
-            let (data, _) = try await session.data(from: dataURL)
-            let object = try JSONDecoder().decode(T.self, from: data)
-            return object
-        } catch {
-            print("Error getting data from \(endpoint): \(error)")
-        }
-        return nil
+        await api.getAdvice(transactionIds: transactionIds)
     }
     
-    private func postData<T: Codable>(httpBody: [String: [String]], _ endpoint: String) async -> T? {
-        _isBusy.send(true)
-        defer { _isBusy.send(false) }
-
-        let dataURL = Self.serviceBaseURL.appending(component: "transactions").appending(component: endpoint)
-        var request = URLRequest(url: dataURL)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        do {
-            let jsonData = try? JSONSerialization.data(withJSONObject: httpBody)
-            request.httpBody = jsonData
-            let (data, _) = try await session.data(for: request)
-            let object = try JSONDecoder().decode(T.self, from: data)
-            return object
-        } catch {
-            print("Error getting data from \(endpoint): \(error)")
-        }
-        return nil
-    }
 }
