@@ -24,6 +24,7 @@
 		54CA89F72AB8EC2A003CA763 /* AdviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA89F62AB8EC2A003CA763 /* AdviceView.swift */; };
 		54CA89F92AB94718003CA763 /* MoneyPersistanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA89F82AB94718003CA763 /* MoneyPersistanceService.swift */; };
 		54CA8A012ABA29B4003CA763 /* MoneyApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA8A002ABA29B4003CA763 /* MoneyApiService.swift */; };
+		54CA8A032ABA3428003CA763 /* MoneyPeristanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA8A022ABA3428003CA763 /* MoneyPeristanceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		54CA89F62AB8EC2A003CA763 /* AdviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdviceView.swift; sourceTree = "<group>"; };
 		54CA89F82AB94718003CA763 /* MoneyPersistanceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyPersistanceService.swift; sourceTree = "<group>"; };
 		54CA8A002ABA29B4003CA763 /* MoneyApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyApiService.swift; sourceTree = "<group>"; };
+		54CA8A022ABA3428003CA763 /* MoneyPeristanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyPeristanceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +143,7 @@
 			children = (
 				1AB3DF892A8BC0B10024B927 /* AccountViewModelTests.swift */,
 				1AE43B0A2A8E734000F15978 /* MoneyServiceTests.swift */,
+				54CA8A022ABA3428003CA763 /* MoneyPeristanceTests.swift */,
 			);
 			path = MoneyTests;
 			sourceTree = "<group>";
@@ -349,6 +352,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1AB3DF8A2A8BC0B10024B927 /* AccountViewModelTests.swift in Sources */,
+				54CA8A032ABA3428003CA763 /* MoneyPeristanceTests.swift in Sources */,
 				1AE43B0B2A8E734000F15978 /* MoneyServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

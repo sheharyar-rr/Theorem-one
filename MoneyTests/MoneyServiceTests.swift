@@ -16,7 +16,7 @@ final class MoneyServiceTests: XCTestCase {
     private var cancellables = Set<AnyCancellable>()
 
     func testBusyState() async {
-        let service = MoneyService()
+        let service = MoneyApiService()
 
         var didBecomeBusy = false
         var finalState = false
@@ -34,12 +34,34 @@ final class MoneyServiceTests: XCTestCase {
     }
 
     func testGetAccount() async throws {
-        let service = MoneyService()
+        let service = MoneyApiService()
 
         let account = await service.getAccount()
         let unwrappedAccount = try XCTUnwrap(account)
 
         XCTAssertEqual(unwrappedAccount.balance, 12312.01)
         XCTAssertEqual(unwrappedAccount.currency, "USD")
+    }
+    
+    func testGetTransactions() async throws {
+        let service = MoneyApiService()
+        
+        let transactions = await service.getTransactions()
+        let unwrappedTransactions = try XCTUnwrap(transactions)
+        
+        XCTAssertGreaterThan(unwrappedTransactions.count, 0, "Count greater than 0")
+    }
+    
+    func testGetAdvice() async throws {
+        // Setup
+        let service = MoneyApiService()
+        
+        let transactions = await service.getTransactions()
+        let unwrappedTransactions = try XCTUnwrap(transactions)
+        let transactionIds = unwrappedTransactions.data.map { $0.id }
+        
+        let advice = await service.getAdvice(transactionIds: transactionIds)
+        
+        XCTAssertNotNil(advice)
     }
 }

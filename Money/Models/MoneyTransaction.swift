@@ -14,7 +14,7 @@ struct MoneyTransaction: Codable {
     var data: [TransactionDetail]
 }
 
-struct TransactionDetail: Codable, Identifiable {
+struct TransactionDetail: Codable, Identifiable, Equatable {
     var amount: Double
     var currency: String
     var id: String

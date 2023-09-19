@@ -6,30 +6,40 @@
 //
 
 import XCTest
+import Combine
+
+@testable import Money
 
 final class MoneyPeristanceTests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
+    
+    var SUT = MoneyPersistanceService()
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        SUT.deleteAccount()
+        SUT.deleteTransactions()
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
+    func testSaveAndGetAccount() async throws {
+       
+        SUT.saveAccount(account: Account(balance: 10, currency: "USD"))
+        
+        let account = await SUT.getAccount()
+        let unwrappedAccount = try XCTUnwrap(account)
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+        XCTAssertEqual(unwrappedAccount.balance, 10)
+        XCTAssertEqual(unwrappedAccount.currency, "USD")
+    }
+    
+    func testSaveAndGetTransaction() async throws {
+       
+        let transactionsToTest = [TransactionDetail(amount: 10, currency: "USD", id: "123", title: "Test Transaction")]
+        SUT.saveTransactions(transactions: MoneyTransaction(total: 1, count: 1, last: true, data: transactionsToTest))
+        
+        let transaction = await SUT.getTransactions()
+        let unwrappedTransaction = try XCTUnwrap(transaction)
+
+        XCTAssertEqual(unwrappedTransaction.total, 1)
+        XCTAssertEqual(unwrappedTransaction.data, transactionsToTest)
     }
 
 }
