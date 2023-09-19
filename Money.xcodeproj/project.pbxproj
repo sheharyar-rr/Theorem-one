@@ -25,6 +25,8 @@
 		54CA89F92AB94718003CA763 /* MoneyPersistanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA89F82AB94718003CA763 /* MoneyPersistanceService.swift */; };
 		54CA8A012ABA29B4003CA763 /* MoneyApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA8A002ABA29B4003CA763 /* MoneyApiService.swift */; };
 		54CA8A032ABA3428003CA763 /* MoneyPeristanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA8A022ABA3428003CA763 /* MoneyPeristanceTests.swift */; };
+		54CA8A072ABA39EC003CA763 /* inAppPlist.plist in Resources */ = {isa = PBXBuildFile; fileRef = 54CA8A062ABA39EC003CA763 /* inAppPlist.plist */; };
+		54CA8A092ABA3A38003CA763 /* StoreKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA8A082ABA3A38003CA763 /* StoreKitManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +69,9 @@
 		54CA89F82AB94718003CA763 /* MoneyPersistanceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyPersistanceService.swift; sourceTree = "<group>"; };
 		54CA8A002ABA29B4003CA763 /* MoneyApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyApiService.swift; sourceTree = "<group>"; };
 		54CA8A022ABA3428003CA763 /* MoneyPeristanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyPeristanceTests.swift; sourceTree = "<group>"; };
+		54CA8A042ABA396A003CA763 /* InAppPurchaseConfig.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = InAppPurchaseConfig.storekit; sourceTree = "<group>"; };
+		54CA8A062ABA39EC003CA763 /* inAppPlist.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = inAppPlist.plist; sourceTree = "<group>"; };
+		54CA8A082ABA3A38003CA763 /* StoreKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +131,7 @@
 				1AB3DFA92A8BC9820024B927 /* API */,
 				1AB3DF7C2A8BC0B10024B927 /* Assets.xcassets */,
 				1AB3DF7E2A8BC0B10024B927 /* Preview Content */,
+				54CA8A052ABA39CC003CA763 /* InAppPurchase */,
 			);
 			path = Money;
 			sourceTree = "<group>";
@@ -200,6 +206,16 @@
 				1AB3DFB82A8BD1E80024B927 /* AccountViewModel.swift */,
 			);
 			path = "View Models";
+			sourceTree = "<group>";
+		};
+		54CA8A052ABA39CC003CA763 /* InAppPurchase */ = {
+			isa = PBXGroup;
+			children = (
+				54CA8A042ABA396A003CA763 /* InAppPurchaseConfig.storekit */,
+				54CA8A062ABA39EC003CA763 /* inAppPlist.plist */,
+				54CA8A082ABA3A38003CA763 /* StoreKitManager.swift */,
+			);
+			path = InAppPurchase;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -308,6 +324,7 @@
 			files = (
 				1AB3DF802A8BC0B10024B927 /* Preview Assets.xcassets in Resources */,
 				1AB3DF7D2A8BC0B10024B927 /* Assets.xcassets in Resources */,
+				54CA8A072ABA39EC003CA763 /* inAppPlist.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +358,7 @@
 				1AB3DF792A8BC0B00024B927 /* MoneyApp.swift in Sources */,
 				1AB3DFA32A8BC3970024B927 /* LaunchScreenStateManager.swift in Sources */,
 				1AB3DFA62A8BC45D0024B927 /* LaunchScreenView.swift in Sources */,
+				54CA8A092ABA3A38003CA763 /* StoreKitManager.swift in Sources */,
 				1AB3DFB92A8BD1E80024B927 /* AccountViewModel.swift in Sources */,
 				54CA89F72AB8EC2A003CA763 /* AdviceView.swift in Sources */,
 				1AB3DFAE2A8BCBBF0024B927 /* Account.swift in Sources */,

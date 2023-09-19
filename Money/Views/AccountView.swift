@@ -47,7 +47,7 @@ struct AccountView: View {
                 .listStyle(.plain)
             }
             
-            AdviceView(type: .advice, advice: viewModel.advice)
+            AdviceView(advice: viewModel.advice)
             Spacer()
         }
         
