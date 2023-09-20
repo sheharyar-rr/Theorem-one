@@ -16,7 +16,11 @@ protocol MoneyPersistanceProtocol {
     func deleteTransactions()
 }
 
-class MoneyPersistanceService: MoneyServiceProtocol {
+public enum MoneyError: Error {
+    case noDecodedData
+}
+
+class MoneyPersistanceService: MoneyPersistanceServiceProtocol {
     
     enum dataType: String {
         case balance, transactions, advice
@@ -24,22 +28,19 @@ class MoneyPersistanceService: MoneyServiceProtocol {
     
     private let _isBusy = PassthroughSubject<Bool, Never>()
     lazy private(set) var isBusy = _isBusy.eraseToAnyPublisher()
+    private let decoder = JSONDecoder()
+    private let encoder = JSONEncoder()
     
-    func getAccount() async -> Account? {
+    func getAccount() async -> Result<Account, Error> {
         await getData(type: .balance)
     }
     
-    func getTransactions() async -> MoneyTransaction? {
+    func getTransactions() async -> Result<MoneyTransaction, Error> {
         await getData(type: .transactions)
-    }
-    
-    func getAdvice(transactionIds: [String]) async -> Advice? {
-        // Doesn't support it yet, but functionality can be added
-        return nil
     }
 }
 
-extension MoneyPersistanceService: MoneyPersistanceProtocol {
+extension MoneyPersistanceService {
     func deleteTransactions() {
         deleteData(type: .transactions)
     }
@@ -59,27 +60,26 @@ extension MoneyPersistanceService: MoneyPersistanceProtocol {
 
 extension MoneyPersistanceService {
     
-    private func getData<T: Codable>(type: dataType) async -> T? {
+    private func getData<T: Codable>(type: dataType) async -> Result<T, Error> {
         _isBusy.send(true)
         defer { _isBusy.send(false) }
         
-        let decoder = JSONDecoder()
         do {
             if let data = UserDefaults.standard.data(forKey: type.rawValue) {
                 let decodedData = try decoder.decode(T.self, from: data)
-                return decodedData
+                return .success(decodedData)
             }
+            return .failure(MoneyError.noDecodedData)
         } catch {
             print(error.localizedDescription)
+            return .failure(error)
         }
-        return nil
     }
     
     private func saveData<T: Codable>(data: T, type: dataType) {
         _isBusy.send(true)
         defer { _isBusy.send(false) }
         
-        let encoder = JSONEncoder()
         do {
             let encodedData = try encoder.encode(data)
             UserDefaults.standard.set(encodedData, forKey: type.rawValue)

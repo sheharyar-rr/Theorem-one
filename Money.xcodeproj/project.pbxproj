@@ -27,6 +27,8 @@
 		54CA8A032ABA3428003CA763 /* MoneyPeristanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA8A022ABA3428003CA763 /* MoneyPeristanceTests.swift */; };
 		54CA8A072ABA39EC003CA763 /* inAppPlist.plist in Resources */ = {isa = PBXBuildFile; fileRef = 54CA8A062ABA39EC003CA763 /* inAppPlist.plist */; };
 		54CA8A092ABA3A38003CA763 /* StoreKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA8A082ABA3A38003CA763 /* StoreKitManager.swift */; };
+		54CA8A0B2ABA9A3F003CA763 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA8A0A2ABA9A3F003CA763 /* URLSessionHTTPClient.swift */; };
+		54CA8A0D2ABA9D51003CA763 /* MoneyServiceProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA8A0C2ABA9D51003CA763 /* MoneyServiceProtocols.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +74,8 @@
 		54CA8A042ABA396A003CA763 /* InAppPurchaseConfig.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = InAppPurchaseConfig.storekit; sourceTree = "<group>"; };
 		54CA8A062ABA39EC003CA763 /* inAppPlist.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = inAppPlist.plist; sourceTree = "<group>"; };
 		54CA8A082ABA3A38003CA763 /* StoreKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitManager.swift; sourceTree = "<group>"; };
+		54CA8A0A2ABA9A3F003CA763 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
+		54CA8A0C2ABA9D51003CA763 /* MoneyServiceProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyServiceProtocols.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +181,8 @@
 				1AB3DFAA2A8BC99E0024B927 /* MoneyService.swift */,
 				54CA89F82AB94718003CA763 /* MoneyPersistanceService.swift */,
 				54CA8A002ABA29B4003CA763 /* MoneyApiService.swift */,
+				54CA8A0A2ABA9A3F003CA763 /* URLSessionHTTPClient.swift */,
+				54CA8A0C2ABA9D51003CA763 /* MoneyServiceProtocols.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -356,12 +362,14 @@
 				54CA89F92AB94718003CA763 /* MoneyPersistanceService.swift in Sources */,
 				54CA89F32AB8CA35003CA763 /* MoneyTransaction.swift in Sources */,
 				1AB3DF792A8BC0B00024B927 /* MoneyApp.swift in Sources */,
+				54CA8A0B2ABA9A3F003CA763 /* URLSessionHTTPClient.swift in Sources */,
 				1AB3DFA32A8BC3970024B927 /* LaunchScreenStateManager.swift in Sources */,
 				1AB3DFA62A8BC45D0024B927 /* LaunchScreenView.swift in Sources */,
 				54CA8A092ABA3A38003CA763 /* StoreKitManager.swift in Sources */,
 				1AB3DFB92A8BD1E80024B927 /* AccountViewModel.swift in Sources */,
 				54CA89F72AB8EC2A003CA763 /* AdviceView.swift in Sources */,
 				1AB3DFAE2A8BCBBF0024B927 /* Account.swift in Sources */,
+				54CA8A0D2ABA9D51003CA763 /* MoneyServiceProtocols.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
