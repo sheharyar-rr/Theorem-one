@@ -29,13 +29,39 @@ class StoreKitManager: ObservableObject {
         } else {
             productDict = [:]
         }
+        
+        updateListenerTask = listenForTransactions()
+        
         Task {
             await requestProducts()
             await updateCustomerProductStatus()
         }
     }
     
-    // request the products in the background
+    deinit {
+        updateListenerTask?.cancel()
+    }
+    
+    func listenForTransactions() -> Task<Void, Error> {
+        return Task.detached {
+            for await result in Transaction.updates {
+                do {
+                    let transaction = try self.checkVerified(result)
+                    
+                    // Transaction is verified, deliver the content to the user
+                    await self.updateCustomerProductStatus()
+                    
+                    // Always finish a transaction
+                    await transaction.finish()
+                } catch {
+                    // Storekit has a transaction that fails verification, don't delvier content to the user
+                    print("Transaction failed verification")
+                }
+            }
+        }
+    }
+    
+    // Request the products in the background
     @MainActor
     func requestProducts() async {
         do {

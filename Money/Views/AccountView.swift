@@ -13,46 +13,17 @@ struct AccountView: View {
 
     var body: some View {
         VStack {
-            HStack {
-                VStack(alignment: .leading) {
-                    Text("Account Balance")
-                        .font(.subheadline)
-                        .bold()
-
-                    HStack {
-                        if viewModel.isBusy {
-                            ProgressView()
-                        } else {
-                            Text(viewModel.accountBalance)
-                                .font(.largeTitle)
-                                .bold()
-                        }
-                    }
-                    .animation(.default, value: viewModel.isBusy)
-                }
-                Spacer()
-            }
-            .padding([.leading, .trailing])
+            accountBalance
             
-            VStack {
-                List(viewModel.transactions) { transaction in
-                    HStack {
-                        Text(transaction.title)
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                        Spacer()
-                        Text(transaction.formattedAmount())
-                    }
-                }
-                .listStyle(.plain)
-            }
+            transactions
+                .animation(.default, value: viewModel.isBusy)
             
-            AdviceView(advice: viewModel.advice)
+            AdviceView(viewModel: viewModel)
+                .animation(.default, value: viewModel.isBusy)
+                
             Spacer()
         }
-        
         .frame(maxWidth: .infinity, alignment: .leading)
-        
         .padding(.top)
         .task {
             // Workaround to overcome the limitations of SwiftUI's launch screen feature.
@@ -62,6 +33,45 @@ struct AccountView: View {
             Task {
                 await viewModel.fetchAccountData()
             }
+        }
+    }
+    
+    var accountBalance: some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text("Account Balance")
+                    .font(.subheadline)
+                    .bold()
+
+                HStack {
+                    if viewModel.isBusy {
+                        ProgressView()
+                    } else {
+                        Text(viewModel.accountBalance)
+                            .font(.largeTitle)
+                            .bold()
+                    }
+                }
+                .animation(.default, value: viewModel.isBusy)
+            }
+            Spacer()
+        }
+        .padding([.leading, .trailing])
+    }
+    
+    var transactions: some View {
+        VStack {
+            List(viewModel.transactions) { transaction in
+                HStack {
+                    Text(transaction.title)
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                    Spacer()
+                    Text(transaction.formattedAmount())
+                        .fontWeight(.light)
+                }
+            }
+            .listStyle(.plain)
         }
     }
 }

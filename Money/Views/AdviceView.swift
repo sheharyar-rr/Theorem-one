@@ -8,46 +8,23 @@
 import SwiftUI
 import StoreKit
 
-enum AdviceType {
-    case info, advice
-}
-
 struct AdviceView: View {
     
     @StateObject var storeKit = StoreKitManager()
-    @State var isPurchased: Bool = true
-    @State var advice: Advice
+    @State var isPurchased: Bool = false
+    @ObservedObject var viewModel: AccountViewModel
     
     var body: some View {
         ZStack {
-            if !isPurchased {
-                Color.blue.opacity(0.2)
-            } else {
-                Color.green.opacity(0.2)
-            }
+            
+            isPurchased ? Color.green.opacity(0.2) : Color.blue.opacity(0.2)
+            
             HStack {
                 icon
                 
-                VStack(alignment: .leading) {
-                    Text(isPurchased ? advice.title : "Go Pro!")
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-                    Text(isPurchased ? advice.description : "Get insight on how to save money using premium advice")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                    
-                    if !isPurchased {
-                        inAppPurchaseRestoreButton
-                    }
-                }
+                adviceText
                 
-                if let inAppPurchase = storeKit.storeProducts.first {
-                    Button(inAppPurchase.displayPrice) {
-                        Task {
-                            _ = try await storeKit.purchase(inAppPurchase)
-                        }
-                    }
-                }
+                inAppPurchaseButton
             }
             .padding(.vertical)
         }
@@ -57,7 +34,7 @@ struct AdviceView: View {
         .onChange(of: storeKit.purchasedProducts) { product in
             Task {
                 if let inAppPurchase = storeKit.storeProducts.first {
-                   // isPurchased = (try? await storeKit.isPurchased(inAppPurchase)) ?? false
+                    isPurchased = (try? await storeKit.isPurchased(inAppPurchase)) ?? false
                 }
             }
         }
@@ -74,13 +51,45 @@ struct AdviceView: View {
             }
         }
         .padding(.horizontal)
+        .font(.title)
+    }
+    
+    var adviceText: some View {
+        VStack(alignment: .leading) {
+            Text(isPurchased ? viewModel.advice.title : "Go Pro!")
+                .font(.subheadline)
+                .fontWeight(.semibold)
+            Text(isPurchased ? viewModel.advice.description : "Get insight on how to save money using premium advice")
+                .font(.footnote)
+                .fontWeight(.light)
+                .foregroundStyle(.secondary)
+                .padding(.trailing
+                )
+            
+            if !isPurchased {
+                inAppPurchaseRestoreButton
+            }
+        }
+    }
+    
+    var inAppPurchaseButton: some View {
+        Group {
+            if let inAppPurchase = storeKit.storeProducts.first, !isPurchased {
+                Button(inAppPurchase.displayPrice) {
+                    Task {
+                        _ = try await storeKit.purchase(inAppPurchase)
+                    }
+                }
+                .padding(.trailing)
+            }
+        }
     }
     
     var inAppPurchaseRestoreButton: some View {
         Button("Restore Purchases") {
             Task {
-                //This call displays a system prompt that asks users to authenticate with their App Store credentials.
-                //Call this function only in response to an explicit user action, such as tapping a button.
+                // This call displays a system prompt that asks users to authenticate with their App Store credentials.
+                // Call this function only in response to an explicit user action, such as tapping a button.
                 try? await AppStore.sync()
             }
         }
@@ -90,5 +99,5 @@ struct AdviceView: View {
 }
 
 #Preview {
-    AdviceView(advice: .init(title: "Go Pro!", description: "Get insight on how to save money using premium advice"))
+    AdviceView(viewModel: AccountViewModel())
 }
