@@ -19,7 +19,15 @@ struct TransactionDetail: Codable, Identifiable, Equatable {
     var currency: String
     var id: String
     var title: String
-    
+}
+
+extension MoneyTransaction {
+    func transactionIds() -> [String] {
+        data.map { $0.id }
+    }
+}
+
+extension TransactionDetail {
     func formattedAmount() -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency

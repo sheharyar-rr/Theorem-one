@@ -16,3 +16,9 @@ struct Account: Codable {
         case currency
     }
 }
+
+extension Account {
+    func formattedBalance() -> String {
+        return balance.formatted(.currency(code: currency))
+    }
+}

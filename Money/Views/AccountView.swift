@@ -18,6 +18,12 @@ struct AccountView: View {
             transactions
                 .animation(.default, value: viewModel.isBusy)
             
+            if !viewModel.error.isEmpty {
+                Text(viewModel.error)
+                    .foregroundStyle(.red)
+                    .font(.callout)
+            }
+            
             AdviceView(viewModel: viewModel)
                 .animation(.default, value: viewModel.isBusy)
                 
