@@ -8,7 +8,10 @@
 import Foundation
 import Combine
 
-@MainActor class AccountViewModel: ObservableObject {
+/// A view model responsible for managing account-related data and interactions.
+
+@MainActor
+class AccountViewModel: ObservableObject {
     @Published private(set) var isBusy = false
     @Published private(set) var accountBalance: String = "-"
     @Published private(set) var transactions: [TransactionDetail] = []
@@ -18,6 +21,8 @@ import Combine
     private let moneyService: MoneyServiceProtocol
     private var cancellables = Set<AnyCancellable>()
     
+    /// Initializes an `AccountViewModel` with an optional money service.
+    /// - Parameter moneyService: The service responsible for money-related interactions.
     init(moneyService: MoneyServiceProtocol = MoneyService()) {
         self.moneyService = moneyService
         
@@ -29,6 +34,7 @@ import Combine
             .store(in: &cancellables)
     }
     
+    /// Fetches account-related data asynchronously.
     func fetchAccountData() async {
         let result = await moneyService.getAccount()
         switch result {
@@ -48,6 +54,8 @@ import Combine
         }
     }
     
+    /// Fetches advice based on a list of transaction IDs.
+    /// - Parameter ids: The list of transaction IDs for which advice is requested.
     func fetchAdvice(ids: [String]) async {
         let adviceResult = await moneyService.getAdvice(transactionIds: ids)
         switch adviceResult {

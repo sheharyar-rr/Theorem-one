@@ -1,5 +1,5 @@
 //
-//  MoneyPersistanceService.swift
+//  MoneyPersistenceService.swift
 //  Money
 //
 //  Created by Sheharyar Irfan on 2023-09-18.
@@ -8,21 +8,29 @@
 import Foundation
 import Combine
 
-protocol MoneyPersistanceProtocol {
+/*
+ We have opted for UserDefaults to streamline persistence, acknowledging that in production environments,
+ alternatives such as CoreData or Keychain might offer more robust solutions.
+ */
+
+/// A protocol defining the methods for persisting money-related data.
+protocol MoneyPersistenceProtocol {
     func saveAccount(account: Account)
     func saveTransactions(transactions: MoneyTransaction)
-    
     func deleteAccount()
     func deleteTransactions()
 }
 
+/// An enumeration representing possible errors related to money operations.
 public enum MoneyError: Error {
     case noDecodedData
 }
 
-class MoneyPersistanceService: MoneyPersistanceServiceProtocol {
+/// A service responsible for persisting money-related data, such as account balance and transactions.
+class MoneyPersistenceService: MoneyPersistenceServiceProtocol {
     
-    enum dataType: String {
+    /// An enumeration to identify the types of data being stored.
+    enum DataType: String {
         case balance, transactions, advice
     }
     
@@ -31,16 +39,21 @@ class MoneyPersistanceService: MoneyPersistanceServiceProtocol {
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
     
+    /// Retrieves the account information asynchronously.
+    /// - Returns: A result containing either the account information or an error.
     func getAccount() async -> Result<Account, Error> {
         await getData(type: .balance)
     }
     
+    /// Retrieves money transactions asynchronously.
+    /// - Returns: A result containing either the money transactions or an error.
     func getTransactions() async -> Result<MoneyTransaction, Error> {
         await getData(type: .transactions)
     }
 }
 
-extension MoneyPersistanceService {
+// MARK: - MoneyPersistenceService Extensions
+extension MoneyPersistenceService {
     func deleteTransactions() {
         deleteData(type: .transactions)
     }
@@ -58,9 +71,13 @@ extension MoneyPersistanceService {
     }
 }
 
-extension MoneyPersistanceService {
+extension MoneyPersistenceService {
     
-    private func getData<T: Codable>(type: dataType) async -> Result<T, Error> {
+    /// Retrieves data of a specified type asynchronously.
+    /// - Parameters:
+    ///   - type: The type of data to retrieve.
+    /// - Returns: A result containing either the retrieved data or an error.
+    private func getData<T: Codable>(type: DataType) async -> Result<T, Error> {
         _isBusy.send(true)
         defer { _isBusy.send(false) }
         
@@ -71,12 +88,16 @@ extension MoneyPersistanceService {
             }
             return .failure(MoneyError.noDecodedData)
         } catch {
-            print(error.localizedDescription)
+            print("Error while decoding data for \(type.rawValue): \(error)")
             return .failure(error)
         }
     }
     
-    private func saveData<T: Codable>(data: T, type: dataType) {
+    /// Saves data of a specified type to storage.
+    /// - Parameters:
+    ///   - data: The data to be saved.
+    ///   - type: The type of data being saved.
+    private func saveData<T: Codable>(data: T, type: DataType) {
         _isBusy.send(true)
         defer { _isBusy.send(false) }
         
@@ -88,7 +109,9 @@ extension MoneyPersistanceService {
         }
     }
     
-    private func deleteData(type: dataType) {
+    /// Deletes data of a specified type from storage.
+    /// - Parameter type: The type of data to be deleted.
+    private func deleteData(type: DataType) {
         _isBusy.send(true)
         defer { _isBusy.send(false) }
         

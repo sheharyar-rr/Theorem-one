@@ -8,18 +8,27 @@
 import Foundation
 import StoreKit
 
+/// An enumeration representing possible errors related to the StoreKitManager.
 public enum StoreError: Error {
     case failedVerification
 }
 
+/// A manager class responsible for handling in-app purchases and managing product data.
 class StoreKitManager: ObservableObject {
     
+    /// An array of available products for in-app purchases.
     @Published var storeProducts: [Product] = []
-    @Published var purchasedProducts : [Product] = []
     
+    /// An array of purchased products by the user.
+    @Published var purchasedProducts: [Product] = []
+    
+    /// A task responsible for listening to in-app purchase transaction updates.
     var updateListenerTask: Task<Void, Error>? = nil
-    private let productDict: [String : String]
     
+    /// A dictionary representing product identifiers and their corresponding product names.
+    private let productDict: [String: String]
+    
+    /// Initializes a new instance of StoreKitManager.
     init() {
         // Check the path for the plist
         if let plistPath = Bundle.main.path(forResource: "inAppPlist", ofType: "plist"),
@@ -38,10 +47,13 @@ class StoreKitManager: ObservableObject {
         }
     }
     
+    /// Deinitializes the StoreKitManager instance.
     deinit {
         updateListenerTask?.cancel()
     }
     
+    /// Listens for in-app purchase transactions and handles their verification and processing.
+    /// - Returns: A detached task responsible for transaction monitoring.
     func listenForTransactions() -> Task<Void, Error> {
         return Task.detached {
             for await result in Transaction.updates {
@@ -61,7 +73,7 @@ class StoreKitManager: ObservableObject {
         }
     }
     
-    // Request the products in the background
+    /// Requests product information for in-app purchases in the background.
     @MainActor
     func requestProducts() async {
         do {
@@ -71,6 +83,10 @@ class StoreKitManager: ObservableObject {
         }
     }
     
+    /// Verifies the result of a transaction and throws an error if verification fails.
+    /// - Parameter result: The verification result to be checked.
+    /// - Returns: The verified result if successful.
+    /// - Throws: A `StoreError.failedVerification` error if verification fails.
     func checkVerified<T>(_ result: VerificationResult<T>) throws -> T {
         switch result {
         case .unverified:
@@ -80,7 +96,7 @@ class StoreKitManager: ObservableObject {
         }
     }
     
-    // Update the customers products
+    /// Updates the status of purchased products for the current customer.
     @MainActor
     func updateCustomerProductStatus() async {
         var purchasedCourses: [Product] = []
@@ -100,6 +116,9 @@ class StoreKitManager: ObservableObject {
         }
     }
     
+    /// Initiates the purchase of a specific product.
+    /// - Parameter product: The product to be purchased.
+    /// - Returns: The transaction associated with the purchase, or `nil` if the purchase fails.
     func purchase(_ product: Product) async throws -> Transaction? {
         let result = try await product.purchase()
         
@@ -121,6 +140,9 @@ class StoreKitManager: ObservableObject {
         
     }
     
+    /// Checks if a specific product has been purchased by the user.
+    /// - Parameter product: The product to be checked for purchase status.
+    /// - Returns: `true` if the product is purchased; otherwise, `false`.
     func isPurchased(_ product: Product) async throws -> Bool {
         return purchasedProducts.contains(product)
     }

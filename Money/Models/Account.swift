@@ -8,8 +8,8 @@
 import Foundation
 
 struct Account: Codable {
-    var balance: Double
-    var currency: String
+    let balance: Double
+    let currency: String
 
     enum CodingKeys: String, CodingKey {
         case balance = "amount"
