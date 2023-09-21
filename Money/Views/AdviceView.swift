@@ -8,6 +8,7 @@
 import SwiftUI
 import StoreKit
 
+/// A view displaying financial advice and an in-app purchase option.
 struct AdviceView: View {
     
     @StateObject var storeKit = StoreKitManager()
@@ -17,7 +18,7 @@ struct AdviceView: View {
     var body: some View {
         ZStack {
             
-            isPurchased ? Color.green.opacity(0.2) : Color.blue.opacity(0.2)
+            isPurchased ? Theme.Colors.successBackground : Theme.Colors.infoBackground
             
             HStack {
                 icon
@@ -40,31 +41,32 @@ struct AdviceView: View {
         }
     }
     
+    /// Icon displayed based on whether the advice is purchased or not.
     var icon: some View {
         Group {
             if !isPurchased {
-                Image(systemName: "info.circle.fill")
-                    .foregroundColor(.blue)
+                Image(systemName: Theme.icons.infoIconName)
+                    .foregroundColor(Theme.Colors.infoIconColor)
             } else {
-                Image(systemName: "checkmark.circle.fill")
-                    .foregroundColor(.green)
+                Image(systemName: Theme.icons.checkmarkIconName)
+                    .foregroundColor(Theme.Colors.checkmarkIconColor)
             }
         }
         .padding(.horizontal)
         .font(.title)
     }
     
+    /// Text containing advice information.
     var adviceText: some View {
         VStack(alignment: .leading) {
-            Text(isPurchased ? viewModel.advice.title : "Go Pro!")
+            Text(isPurchased ? viewModel.advice.title : Theme.Strings.defaultAdviceTitle)
                 .font(.subheadline)
                 .fontWeight(.semibold)
-            Text(isPurchased ? viewModel.advice.description : "Get insight on how to save money using premium advice")
+            Text(isPurchased ? viewModel.advice.description : Theme.Strings.defaultAdviceDescription)
                 .font(.footnote)
                 .fontWeight(.light)
                 .foregroundStyle(.secondary)
-                .padding(.trailing
-                )
+                .padding(.trailing)
             
             if !isPurchased {
                 inAppPurchaseRestoreButton
@@ -72,6 +74,7 @@ struct AdviceView: View {
         }
     }
     
+    /// Button for making an in-app purchase.
     var inAppPurchaseButton: some View {
         Group {
             if let inAppPurchase = storeKit.storeProducts.first, !isPurchased {
@@ -85,8 +88,9 @@ struct AdviceView: View {
         }
     }
     
+    /// Button for restoring in-app purchases.
     var inAppPurchaseRestoreButton: some View {
-        Button("Restore Purchases") {
+        Button(Theme.Strings.restorePurchasesButtonTitle) {
             Task {
                 // This call displays a system prompt that asks users to authenticate with their App Store credentials.
                 // Call this function only in response to an explicit user action, such as tapping a button.

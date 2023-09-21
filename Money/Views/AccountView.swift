@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A view displaying the user's account information.
 struct AccountView: View {
     @EnvironmentObject private var launchScreenStateManager: LaunchScreenStateManager
     @StateObject private var viewModel = AccountViewModel()
@@ -20,10 +21,11 @@ struct AccountView: View {
             
             if !viewModel.error.isEmpty {
                 Text(viewModel.error)
-                    .foregroundStyle(.red)
+                    .foregroundStyle(Theme.Colors.errorText)
                     .font(.callout)
             }
             
+            // Display financial advice to the user.
             AdviceView(viewModel: viewModel)
                 .animation(.default, value: viewModel.isBusy)
                 
@@ -36,16 +38,18 @@ struct AccountView: View {
             try? await Task.sleep(for: Duration.seconds(1))
             launchScreenStateManager.dismissLaunchScreen()
 
+            // Fetch account data when the view appears.
             Task {
                 await viewModel.fetchAccountData()
             }
         }
     }
     
+    /// A view displaying the account balance.
     var accountBalance: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text("Account Balance")
+                Text(Theme.Strings.defaultAccountBalanceTitle)
                     .font(.subheadline)
                     .bold()
 
@@ -65,8 +69,8 @@ struct AccountView: View {
         .padding([.leading, .trailing])
     }
     
+    /// A list view displaying the user's financial transactions.
     var transactions: some View {
-        VStack {
             List(viewModel.transactions) { transaction in
                 HStack {
                     Text(transaction.title)
@@ -76,9 +80,10 @@ struct AccountView: View {
                     Text(transaction.formattedAmount())
                         .fontWeight(.light)
                 }
+                .accessibilityIdentifier("listElement")
             }
+            .accessibilityIdentifier("list")
             .listStyle(.plain)
-        }
     }
 }
 
