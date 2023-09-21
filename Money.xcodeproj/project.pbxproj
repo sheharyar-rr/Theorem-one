@@ -29,6 +29,7 @@
 		54CA8A092ABA3A38003CA763 /* StoreKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA8A082ABA3A38003CA763 /* StoreKitManager.swift */; };
 		54CA8A0B2ABA9A3F003CA763 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA8A0A2ABA9A3F003CA763 /* URLSessionHTTPClient.swift */; };
 		54CA8A0D2ABA9D51003CA763 /* MoneyServiceProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA8A0C2ABA9D51003CA763 /* MoneyServiceProtocols.swift */; };
+		54CA8A132ABCB286003CA763 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CA8A122ABCB286003CA763 /* Theme.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		54CA8A082ABA3A38003CA763 /* StoreKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitManager.swift; sourceTree = "<group>"; };
 		54CA8A0A2ABA9A3F003CA763 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
 		54CA8A0C2ABA9D51003CA763 /* MoneyServiceProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyServiceProtocols.swift; sourceTree = "<group>"; };
+		54CA8A122ABCB286003CA763 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +204,7 @@
 			children = (
 				1AB3DF7A2A8BC0B00024B927 /* AccountView.swift */,
 				54CA89F62AB8EC2A003CA763 /* AdviceView.swift */,
+				54CA8A122ABCB286003CA763 /* Theme.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -364,6 +367,7 @@
 				1AB3DF792A8BC0B00024B927 /* MoneyApp.swift in Sources */,
 				54CA8A0B2ABA9A3F003CA763 /* URLSessionHTTPClient.swift in Sources */,
 				1AB3DFA32A8BC3970024B927 /* LaunchScreenStateManager.swift in Sources */,
+				54CA8A132ABCB286003CA763 /* Theme.swift in Sources */,
 				1AB3DFA62A8BC45D0024B927 /* LaunchScreenView.swift in Sources */,
 				54CA8A092ABA3A38003CA763 /* StoreKitManager.swift in Sources */,
 				1AB3DFB92A8BD1E80024B927 /* AccountViewModel.swift in Sources */,
