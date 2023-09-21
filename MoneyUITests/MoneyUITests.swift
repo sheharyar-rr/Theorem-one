@@ -14,5 +14,9 @@ final class MoneyUITests: XCTestCase {
 
         XCTAssertTrue(app.staticTexts["Account Balance"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.staticTexts["$12,312.01"].exists)
+        
+        let listView = app.collectionViews["list"]
+        XCTAssertTrue(listView.waitForExistence(timeout: 2))
+        XCTAssertTrue(listView.accessibilityElementCount() > 0)
     }
 }

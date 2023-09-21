@@ -12,7 +12,7 @@ import Combine
 
 final class MoneyPeristanceTests: XCTestCase {
     
-    var SUT = MoneyPersistanceService()
+    var SUT = MoneyPersistenceService()
 
     override func tearDownWithError() throws {
         SUT.deleteAccount()
@@ -24,7 +24,7 @@ final class MoneyPeristanceTests: XCTestCase {
         SUT.saveAccount(account: Account(balance: 10, currency: "USD"))
         
         let account = await SUT.getAccount()
-        let unwrappedAccount = try XCTUnwrap(account)
+        let unwrappedAccount = try account.get()
 
         XCTAssertEqual(unwrappedAccount.balance, 10)
         XCTAssertEqual(unwrappedAccount.currency, "USD")
@@ -36,7 +36,7 @@ final class MoneyPeristanceTests: XCTestCase {
         SUT.saveTransactions(transactions: MoneyTransaction(total: 1, count: 1, last: true, data: transactionsToTest))
         
         let transaction = await SUT.getTransactions()
-        let unwrappedTransaction = try XCTUnwrap(transaction)
+        let unwrappedTransaction = try transaction.get()
 
         XCTAssertEqual(unwrappedTransaction.total, 1)
         XCTAssertEqual(unwrappedTransaction.data, transactionsToTest)

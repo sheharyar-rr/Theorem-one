@@ -36,8 +36,8 @@ final class MoneyServiceTests: XCTestCase {
     func testGetAccount() async throws {
         let service = MoneyApiService()
 
-        let account = await service.getAccount()
-        let unwrappedAccount = try XCTUnwrap(account)
+        let result = await service.getAccount()
+        let unwrappedAccount = try result.get()
 
         XCTAssertEqual(unwrappedAccount.balance, 12312.01)
         XCTAssertEqual(unwrappedAccount.currency, "USD")
@@ -46,8 +46,8 @@ final class MoneyServiceTests: XCTestCase {
     func testGetTransactions() async throws {
         let service = MoneyApiService()
         
-        let transactions = await service.getTransactions()
-        let unwrappedTransactions = try XCTUnwrap(transactions)
+        let result = await service.getTransactions()
+        let unwrappedTransactions = try result.get()
         
         XCTAssertGreaterThan(unwrappedTransactions.count, 0, "Count greater than 0")
     }
@@ -56,8 +56,8 @@ final class MoneyServiceTests: XCTestCase {
         // Setup
         let service = MoneyApiService()
         
-        let transactions = await service.getTransactions()
-        let unwrappedTransactions = try XCTUnwrap(transactions)
+        let result = await service.getTransactions()
+        let unwrappedTransactions = try result.get()
         let transactionIds = unwrappedTransactions.data.map { $0.id }
         
         let advice = await service.getAdvice(transactionIds: transactionIds)
