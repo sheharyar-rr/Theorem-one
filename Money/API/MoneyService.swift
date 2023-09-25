@@ -42,7 +42,7 @@ class MoneyService: MoneyServiceProtocol {
         switch result {
         case .success(let account):
             // Save to persistence layer
-            persistence.saveAccount(account: account)
+            await persistence.saveAccount(account: account)
             return result
         case .failure(let error):
             print("Network error in \(#function): \(error.localizedDescription)")
@@ -57,7 +57,7 @@ class MoneyService: MoneyServiceProtocol {
         switch result {
         case .success(let transactions):
             // Save to persistence layer
-            persistence.saveTransactions(transactions: transactions)
+            await persistence.saveTransactions(transactions: transactions)
             return result
         case .failure(let error):
             print("Network error in \(#function): \(error.localizedDescription)")
